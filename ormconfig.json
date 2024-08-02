@@ -1,0 +1,14 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5435,
+    "username": "user_my2home",
+    "password": "root",
+    "database": "db_my2home",
+    "synchronize": false,
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "migrations": ["dist/migrations/*.js"],
+    "cli": {
+        "migrationsDir": "src/migrations"
+    }
+  }
