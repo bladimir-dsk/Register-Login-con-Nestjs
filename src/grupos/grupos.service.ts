@@ -16,28 +16,25 @@ export class GruposService {
   ) {}
 
   async create(createGrupoDto: CreateGrupoDto) {
-    // Busca el salón por su ID
-    const salon = await this.saloneservice.findOne({
-      where: { id: createGrupoDto.salonid },
-    });
-
-    if (!salon) {
-      throw new Error('El salón especificado no existe');
+    // Busca los salones por sus IDs (si son múltiples)
+    const salones = await this.saloneservice.findByIds(createGrupoDto.salonesIds);
+  
+    if (salones.length === 0) {
+      throw new NotFoundException('No se encontraron salones válidos.');
     }
-
-    // Crea el nuevo grupo y lo asocia con el salón
-    const grupo = this.gruposervice.create({
+  
+    // Crea el nuevo grupo y lo asocia con los salones
+    const nuevoGrupo = this.gruposervice.create({
       ...createGrupoDto,
-      salonid: salon, // Asociar el salón con el grupo
+      salones: salones,  // Asocia los salones con el grupo
     });
-
+  
     // Guarda el grupo en la base de datos
-    return await this.gruposervice.save(grupo);
+    return await this.gruposervice.save(nuevoGrupo);
   }
-
   async findAll() {
     const grupos = await this.gruposervice.find({
-      relations: ['evaluador','salonid'],
+      relations: ['evaluador','salones'],
     });
 
     // Filtra los grupos que tienen evaluadores
@@ -71,21 +68,22 @@ export class GruposService {
     worksheet.columns = [
       { header: 'ID', key: 'id', width: 10 },
       { header: 'Nombre del Grupo', key: 'nombre', width: 30 },
-      { header: 'Salón', key: 'salon', width: 30 },
+      { header: 'Salones', key: 'salones', width: 30 }, // Cambio: "Salón" -> "Salones"
       { header: 'Evaluador', key: 'evaluador', width: 30 },
       { header: 'Calificación', key: 'calificacion', width: 15 },
     ];
   
     // Agregar los datos de los grupos
     top3Grupos.forEach(grupo => {
-      const salonNombre = grupo.salonid?.nombre || 'Sin Salón'; // Verifica si salonid existe
-      const evaluadorNombre = grupo.evaluador[0]?.nombre || 'Sin Evaluador'; // Verifica si evaluador existe y si tiene un nombre
-      const calificacion = grupo.evaluador[0]?.calificacion || 'Sin Calificación'; // Verifica si existe la calificación
+      // Si quieres mostrar todos los salones asociados, puedes unir los nombres en una cadena
+      const nombresSalones = grupo.salones.map(salon => salon.nombre).join(', ') || 'Sin Salón';
+      const evaluadorNombre = grupo.evaluador[0]?.nombre || 'Sin Evaluador';
+      const calificacion = grupo.evaluador[0]?.calificacion || 'Sin Calificación';
   
       worksheet.addRow({
         id: grupo.id,
         nombre: grupo.nombre,
-        salon: salonNombre,
+        salones: nombresSalones, // Cambio: Ahora incluye todos los salones
         evaluador: evaluadorNombre,
         calificacion: calificacion,
       });
@@ -104,7 +102,6 @@ export class GruposService {
     await workbook.xlsx.write(res);
     res.end();
   }
-
   findtodos() {
     return this.gruposervice.find({ relations: { evaluador: true } });
   }

@@ -1,7 +1,9 @@
-import { IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from "class-validator";
 
 export class CreateGrupoDto {
     @IsString()
     nombre: string;
-    salonid: number;
+    @IsArray()
+    salonesIds: number[];
+  
 }

@@ -1,5 +1,5 @@
 import { Grupo } from "src/grupos/entities/grupo.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -8,10 +8,7 @@ export class Salone {
     id: number;
     @Column()
     nombre: string;
-
-
-    @OneToMany(() => Grupo, (grupo) => grupo.salonid)
-    salone: Salone[]
-
+    @ManyToMany(() => Grupo, (grupo) => grupo.salones)
+    grupos: Grupo[];
     
 }
