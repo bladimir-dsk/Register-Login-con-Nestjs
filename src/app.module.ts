@@ -3,6 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PerfilUsuarioModule } from './perfil-usuario/perfil-usuario.module';
+import { GruposModule } from './grupos/grupos.module';
+import { AlumnosModule } from './alumnos/alumnos.module';
+import { SalonesModule } from './salones/salones.module';
+import { EvaluadoresModule } from './evaluadores/evaluadores.module';
 
 
 @Module({
@@ -19,7 +23,11 @@ import { PerfilUsuarioModule } from './perfil-usuario/perfil-usuario.module';
     }),
     UsersModule,
     AuthModule,
-    PerfilUsuarioModule,],
+    PerfilUsuarioModule,
+    GruposModule,
+    AlumnosModule,
+    SalonesModule,
+    EvaluadoresModule,],
   controllers: [],
   providers: [],
 })

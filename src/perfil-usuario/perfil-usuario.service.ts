@@ -26,7 +26,7 @@ export class PerfilUsuarioService {
   }
 
   async findAll(user: UserActiveInterface) {
-    if (user.role === Role.SOPORTE) {
+    if (user.role === Role.JURADO) {
       return await this.perfilRepository.find({ relations: ['user'] });
     }
     return this.perfilRepository.find({ where: {userEmail: user.email}, relations: ['user'] });

@@ -16,7 +16,7 @@ export class AuthService {
     
 
     //en el register resivimos el registerDto que se comporta como RegisterDto 
-    async register({nbNombres, nbPrimerApellido, nbSegundoApellido,  numTelefonoCelular, email, pwdPassword }: RegisterDto) {
+    async register({nbNombres,email, pwdPassword }: RegisterDto) {
         
         //capturo el email y si el usuario existe le mando un error 400 bad_request
         const user = await this.usersService.findOneByEmail(email);
@@ -25,9 +25,6 @@ export class AuthService {
         }
         return await this.usersService.create({
             nbNombres,
-            nbPrimerApellido,
-            nbSegundoApellido,
-            numTelefonoCelular,
             email,
             //bcryptjs.hash es para incryptar el password
             pwdPassword: await bcryptjs.hash(pwdPassword, 10)//el numero 10 es la cadena de texto que se le pondra al encryptar, es texto aleatorio.
