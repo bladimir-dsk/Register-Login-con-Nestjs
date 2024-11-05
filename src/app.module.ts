@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { PerfilUsuarioModule } from './perfil-usuario/perfil-usuario.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { DepartmentModule } from './department/department.module';
 
@@ -20,7 +19,6 @@ import { DepartmentModule } from './department/department.module';
     }),
     UsersModule,
     AuthModule,
-    PerfilUsuarioModule,
     InventoryModule,
     DepartmentModule,
     ],
