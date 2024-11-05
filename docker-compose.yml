@@ -2,13 +2,13 @@ version: "4.0"
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres_db_my2home
+    container_name: postgres_db_adminDW
     restart: always
     environment:
-      POSTGRES_DB: db_my2home
-      POSTGRES_USER: user_my2home
+      POSTGRES_DB: db_adminDW
+      POSTGRES_USER: user_admin
       POSTGRES_PASSWORD: root
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
-      - "5435:5432"
+      - "5438:5432"

@@ -1,11 +1,11 @@
 {
     "type": "postgres",
     "host": "localhost",
-    "port": 5435,
-    "username": "user_my2home",
+    "port": 5438,
+    "username": "user_admin",
     "password": "root",
-    "database": "db_my2home",
-    "synchronize": false,
+    "database": "db_adminDW",
+    "synchronize": true,
     "entities": ["dist/**/*.entity{.ts,.js}"],
     "migrations": ["dist/migrations/*.js"],
     "cli": {

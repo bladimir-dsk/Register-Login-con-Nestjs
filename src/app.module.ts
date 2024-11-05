@@ -3,31 +3,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PerfilUsuarioModule } from './perfil-usuario/perfil-usuario.module';
-import { GruposModule } from './grupos/grupos.module';
-import { AlumnosModule } from './alumnos/alumnos.module';
-import { SalonesModule } from './salones/salones.module';
-import { EvaluadoresModule } from './evaluadores/evaluadores.module';
-
+import { InventoryModule } from './inventory/inventory.module';
+import { DepartmentModule } from './department/department.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
       host: "localhost",
-      port: 5435,
-      username: "user_my2home",
+      port: 5438,
+      username: "user_admin",
       password: "root",
-      database: "db_my2home",
+      database: "db_adminDW",
       autoLoadEntities: true,
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
     PerfilUsuarioModule,
-    GruposModule,
-    AlumnosModule,
-    SalonesModule,
-    EvaluadoresModule,],
+    InventoryModule,
+    DepartmentModule,
+    ],
   controllers: [],
   providers: [],
 })

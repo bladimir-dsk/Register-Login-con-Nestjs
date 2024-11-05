@@ -24,7 +24,7 @@ export class User {
 
     //es de tipo enum 
     //el rol por defecto lo va a guardar como user
-    @Column({ type: 'enum', default: Role.JURADO, enum: Role})//tipamos enum para que solo pueda resivir los tipos de roles del enum
+    @Column({ type: 'enum', default: Role.USER, enum: Role})//tipamos enum para que solo pueda resivir los tipos de roles del enum
     role:  Role;
 
     //deletedatecolumn es para hacer eliminaciones logicas y no fisicas en la base de datos
