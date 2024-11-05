@@ -35,8 +35,11 @@ export class CreateInventoryDto {
     @IsString()
     observations: string
 
-    @IsString()
+    @IsNumber()
     // @IsOptional()
-    departaments: string;
+    departaments: number;
+
+    @IsNumber()
+    categorys: number;
 
 }

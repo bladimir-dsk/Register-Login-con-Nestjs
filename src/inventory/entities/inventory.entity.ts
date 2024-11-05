@@ -1,3 +1,4 @@
+import { Category } from 'src/category/entities/category.entity';
 import { Department } from 'src/department/entities/department.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -58,8 +59,13 @@ export class Inventory {
   @Column()
   userEmail: string;
 
-  @ManyToOne(() => Department, (department) => department.name, {
+  @ManyToOne(() => Department, (department) => department.id, {
     eager: true,
   })
   departments: Department;
+
+  @ManyToOne(() => Category, (category) => category.id, {
+    eager: true,
+  })
+  categorys: Category;
 }

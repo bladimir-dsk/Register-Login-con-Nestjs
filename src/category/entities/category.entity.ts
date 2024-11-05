@@ -2,20 +2,12 @@ import { Inventory } from "src/inventory/entities/inventory.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({name: 'departments'})
-export class Department {
-
+@Entity({ name: 'categories' })
+export class Category {
     @PrimaryGeneratedColumn()
     id: number;
-
     @Column()
     name: string;
-
-    @Column()
-    description: string;
-
-    @Column()
-    leader: string;
 
     @ManyToOne(() => User, (user) => user.email)
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email' })
@@ -26,6 +18,4 @@ export class Department {
 
     @OneToMany(() => Inventory, (inventory) => inventory.id)
     inventorys: Inventory[]
-    
-
 }
