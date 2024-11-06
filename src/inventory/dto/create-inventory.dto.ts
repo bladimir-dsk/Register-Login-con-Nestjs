@@ -20,8 +20,8 @@ export class CreateInventoryDto {
     // @IsString()
     // department: string;
 
-    @IsString()
-    category: string;
+    // @IsString()
+    // category: string;
 
     @IsDate()
     @Type(() => Date)

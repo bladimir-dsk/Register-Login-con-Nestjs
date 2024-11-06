@@ -7,10 +7,12 @@ import { Department } from 'src/department/entities/department.entity';
 import { DepartmentService } from 'src/department/department.service';
 import { CategoryService } from 'src/category/category.service';
 import { Category } from 'src/category/entities/category.entity';
+import { Person } from 'src/person/entities/person.entity';
+import { PersonService } from 'src/person/person.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Inventory, Department, Category])],
+  imports: [TypeOrmModule.forFeature([Inventory, Department, Category, Person])],
   controllers: [InventoryController],
-  providers: [InventoryService, DepartmentService, CategoryService],
+  providers: [InventoryService, DepartmentService, CategoryService, PersonService],
 })
 export class InventoryModule {}

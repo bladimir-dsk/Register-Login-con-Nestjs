@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 export class CreateDepartmentDto {
 
@@ -8,6 +8,9 @@ export class CreateDepartmentDto {
     @IsString()
     description: string;
     
-    @IsString()
-    leader: string;
+    // @IsString()
+    // leader: string;
+
+    @IsNumber()
+    personId: number;
 }

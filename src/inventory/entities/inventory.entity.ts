@@ -31,8 +31,8 @@ export class Inventory {
   @Column()
   location: string;
 
-  @Column()
-  category: string;
+  // @Column()
+  // category: string;
 
   // @Column()
   // department: string;

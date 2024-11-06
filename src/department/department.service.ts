@@ -6,20 +6,32 @@ import { Department } from './entities/department.entity';
 import { Repository } from 'typeorm';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { Role } from 'src/common/enums/rol.enum';
+import { Person } from 'src/person/entities/person.entity';
 
 @Injectable()
 export class DepartmentService {
   constructor(
     @InjectRepository(Department)
     private readonly departmentRepository: Repository<Department>,
+    @InjectRepository(Person)
+    private readonly personRepository: Repository<Person>,
   ) {}
   async create(
     createDepartmentDto: CreateDepartmentDto,
     user: UserActiveInterface,
   ) {
+    const validatePerson = await this.personRepository.findOne({
+      where: { id: createDepartmentDto.personId },
+    });
+    if (!validatePerson) {
+      throw new BadRequestException('La persona no existe');
+     
+    }
+
     const newDepartment = this.departmentRepository.create({
       ...createDepartmentDto,
       userEmail: user.email,
+      person: validatePerson,
     });
     return await this.departmentRepository.save(newDepartment);
   }
@@ -52,7 +64,16 @@ export class DepartmentService {
     if (!validateDepartment) {
       throw new BadRequestException('El departamento no existe');
     }
-    return this.departmentRepository.update(id, updateDepartmentDto);
+    const validatePerson = await this.personRepository.findOne({
+      where: { id: updateDepartmentDto.personId },
+    })
+    if (!validatePerson) {
+      throw new BadRequestException('La persona no existe');
+    }
+    Object.assign(validateDepartment, updateDepartmentDto);
+    validateDepartment.person = validatePerson;
+    validateDepartment.userEmail = user.email;
+    return await this.departmentRepository.save(validateDepartment);
   }
 
   async remove(id: number, user: UserActiveInterface) {
