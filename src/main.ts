@@ -13,6 +13,10 @@ async function bootstrap() {
       transform: true,
     })
   );
+
+  // Habilitar CORS
+  app.enableCors();
+
   await app.listen(3000);
 }
 bootstrap();
