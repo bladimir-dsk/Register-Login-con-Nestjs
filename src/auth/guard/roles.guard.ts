@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
 
     //con esta condiccion le decimos que los roles de user los administradores pondran entrar sin problema
-    if(user.role === Role.ADMIN) {
+    if(user.role === Role.SOPORTE) {
       return true;
     }
 

@@ -1,14 +1,14 @@
 {
     "type": "postgres",
     "host": "localhost",
-    "port": 5438,
-    "username": "user_admin",
+    "port": 5439,
+    "username": "DocumentAdmin",
     "password": "root",
-    "database": "db_adminDW",
+    "database": "db_documenta",
     "synchronize": true,
     "entities": ["dist/**/*.entity{.ts,.js}"],
     "migrations": ["dist/migrations/*.js"],
     "cli": {
         "migrationsDir": "src/migrations"
     }
-  }
+}

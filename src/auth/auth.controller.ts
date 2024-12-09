@@ -49,7 +49,7 @@ export class AuthController {
 
 
     @Get('profile')// ruta que nos da acceso dependiendo del rol
-    @Auth(Role.USER)//auth es un decorador que une los guards y los roles
+    @Auth(Role.SUPERVISOR)//auth es un decorador que une los guards y los roles
     profile(@ActiveUser() user: UserActiveInterface) {
     return this.authService.profile(user)
     }

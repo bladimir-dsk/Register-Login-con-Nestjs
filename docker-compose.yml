@@ -2,13 +2,13 @@ version: "4.0"
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres_db_adminDW
+    container_name: postgres_documenta
     restart: always
     environment:
-      POSTGRES_DB: db_adminDW
-      POSTGRES_USER: user_admin
+      POSTGRES_DB: db_documenta
+      POSTGRES_USER: DocumentAdmin
       POSTGRES_PASSWORD: root
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
-      - "5438:5432"
+      - "5439:5432"
