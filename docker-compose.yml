@@ -2,13 +2,13 @@ version: "4.0"
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres_documenta
+    container_name: postgres_SAAS
     restart: always
     environment:
-      POSTGRES_DB: db_documenta
-      POSTGRES_USER: DocumentAdmin
+      POSTGRES_DB: db_SAAS
+      POSTGRES_USER: SAAS
       POSTGRES_PASSWORD: root
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
-      - "5439:5432"
+      - "5440:5432"

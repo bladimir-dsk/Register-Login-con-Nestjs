@@ -16,44 +16,56 @@ export class AuthService {
     
 
     //en el register resivimos el registerDto que se comporta como RegisterDto 
-    async register({nbNombres,email, pwdPassword }: RegisterDto) {
-        
-        //capturo el email y si el usuario existe le mando un error 400 bad_request
+    async register({ nbNombres, email, pwdPassword, empresa }: RegisterDto) {
         const user = await this.usersService.findOneByEmail(email);
-        if(user){
+        if (user) {
             throw new BadRequestException("Email already exists");
         }
-        return await this.usersService.create({
+    
+        const userData = {
             nbNombres,
             email,
-            //bcryptjs.hash es para incryptar el password
-            pwdPassword: await bcryptjs.hash(pwdPassword, 10)//el numero 10 es la cadena de texto que se le pondra al encryptar, es texto aleatorio.
-        });
-        
+            pwdPassword: await bcryptjs.hash(pwdPassword, 10)
+        };
+    
+        // Si se envía la empresa, se agrega al objeto
+        if (empresa) {
+            userData['empresa'] = {
+                nombre: empresa.nombre,
+            };
+        }
+    
+        return await this.usersService.create(userData);
     }
-    async login({email, pwdPassword} : LoginDto){
 
-        //captura el email, si le pone una condicion, si no existe el usuario le mostramos un error de que el usuario no existe
+    
+    
+    async login({ email, pwdPassword }: LoginDto) {
         const user = await this.usersService.finByEmailWithPassword(email);
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException("Invalid email");
         }
-        //verificamos que el password coincida 
+    
         const isPasswordValid = await bcryptjs.compare(pwdPassword, user.pwdPassword);
-
-        if(!isPasswordValid){
+        if (!isPasswordValid) {
             throw new UnauthorizedException("Invalid password");
         }
-        //payload le pasamos en el token es el email
-        const payload = { email: user.email, role: user.role}
-        //firma
+    
+        const payload = { 
+            email: user.email, 
+            role: user.role, 
+            id_empresa: user.empresa ? user.empresa.id_empresa : null  // Asegúrate de que aquí no sea undefined
+        };
+    
         const token = await this.jwtService.signAsync(payload);
-        //retornamos el token de acceso si las credenciales son validas
+    
         return {
             token,
             email,
-        }
+            id_empresa: user.empresa ? user.empresa.id_empresa : null 
+        };
     }
+    
 
     async profile({email, role}: {email: string, role: string}){
             //VALIDAMOS QUE EL USUARIO CUMPLA CON EL ROL DE ADMIN PARA DEJARLO INGRESAR

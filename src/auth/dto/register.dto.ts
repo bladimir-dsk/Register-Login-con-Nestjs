@@ -1,5 +1,6 @@
-import { Transform } from "class-transformer";
-import { IsDateString, IsEmail, IsNumber, IsString, MaxLength, MinLength } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsDateString, IsEmail, IsNumber, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
+import { CreateEmpresaDto } from "src/empresa/dto/create-empresa.dto";
 
 export class RegisterDto{
 
@@ -16,4 +17,10 @@ export class RegisterDto{
     @IsString()
     @MinLength(6)
     pwdPassword:string;
+
+
+    @ValidateNested()
+    @Type(() => CreateEmpresaDto)
+    @IsOptional()  
+    empresa?: CreateEmpresaDto;
 }

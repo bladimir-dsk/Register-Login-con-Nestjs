@@ -1,3 +1,7 @@
+import { Type } from "class-transformer"
+import { IsOptional, ValidateNested } from "class-validator"
+import { CreateEmpresaDto } from "src/empresa/dto/create-empresa.dto"
+
 export class CreateUserDto {
 
     email: string
@@ -6,4 +10,10 @@ export class CreateUserDto {
     nbPrimerApellido?: string
     nbSegundoApellido?: string
     numTelefonoCelular?: string
+
+
+    @ValidateNested()
+    @Type(() => CreateEmpresaDto)
+    @IsOptional()  
+    empresa?: CreateEmpresaDto;
 }

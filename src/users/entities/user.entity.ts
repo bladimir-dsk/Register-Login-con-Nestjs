@@ -1,6 +1,8 @@
 //no usemos el src/../commo.....-- usaremos de manejar puras rutas relativas usando el ../../coommon
+import { Empresa } from "src/empresa/entities/empresa.entity";
 import { Role } from "../../common/enums/rol.enum";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Empleado } from "src/empleado/entities/empleado.entity";
 
 
 @Entity()
@@ -33,6 +35,18 @@ export class User {
 
     @CreateDateColumn()
     createdAt: Date
+
+
+    @ManyToOne(() => Empresa, (empresa) => empresa.user, {
+        cascade: true, // Permite que al guardar un empleado también se guarde el contacto automáticamente
+    })
+    @JoinColumn({name: 'id_empresa'})
+    empresa: Empresa;
+
+
+    @OneToMany(() => Empleado, (empleado) => empleado.user)
+    empleados: Empleado[];
+
 
     
 
